@@ -41,13 +41,14 @@ public class FileBatchJobConfig {
     public Job fileJob(JobRepository jobRepository, Step fileStep){
         return new JobBuilder(JOB_NAME, jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(fileStep).build();
+                .start(fileStep)
+                .build();
     }
 
     @Bean
     public Step fileStep(JobRepository jobRepository, PlatformTransactionManager transactionManager){
         return new StepBuilder(STEP_NAME, jobRepository)
-                .chunk(CHUNK_SIZE)
+                .<Product, Product>chunk(CHUNK_SIZE, transactionManager)
                 .reader(fileItemReader())
                 .processor(fileItemProcessor())
                 .writer(fileItemWriter())

@@ -8,6 +8,8 @@ public class ProductFieldSetMapper implements FieldSetMapper<Product> {
 
     @Override
     public Product mapFieldSet(FieldSet fieldSet) throws BindException {
-        return new Product(fieldSet.readLong(0), fieldSet.readString(1), fieldSet.readBigDecimal(2));
+        return new Product(fieldSet.readLong(0),
+                           fieldSet.readString(1),
+                           fieldSet.readBigDecimal(2));
     }
 }
